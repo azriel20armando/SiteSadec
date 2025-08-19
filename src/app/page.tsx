@@ -1,5 +1,5 @@
 "use client";
-
+import Image from 'next/image';
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 
@@ -81,7 +81,12 @@ export default function Page() {
             <a href="#" className="flex justify-center items-center gap-2 group">
               <div className="w-20 h-20 mt-9"
                 style={{  }}>
-                  <img src="/logo.jpg" alt="" />
+                  <Image 
+                    src="/logo.jpg" 
+                    alt="Descrição da imagem logo" 
+                    width={200}    // Ajuste para a largura real da imagem
+                    height={100}   // Ajuste para a altura real da imagem
+                  />
               </div>
               <div>
                 <p className="text-sm font-semibold tracking-wide text-black leading-tight">Programa de Adesão</p>
@@ -177,7 +182,12 @@ export default function Page() {
             </motion.div>
             <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}>
               <div className="relative rounded-3xl overflow-hidden border border-black/10 shadow-2xl">
-                <img src="/home-foto.jpg" alt="" />
+                <Image 
+                  src="/home-foto.jpg" 
+                  alt="Descrição da imagem home-foto" 
+                  width={1200}   // Ajuste para a largura real da imagem
+                  height={800}   // Ajuste para a altura real da imagem
+                />
                 <div className="absolute inset-0 p-4 flex items-end justify-between">
                   <span className="text-xs bg-white/60 px-3 py-1 rounded-full">SADC • AfCFTA • Angola</span>
                   <span className="text-xs bg-white/60 px-3 py-1 rounded-full">Comércio & Integração</span>
