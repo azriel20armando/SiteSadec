@@ -1,4 +1,5 @@
 "use client";
+
 import Image from 'next/image';
 import React, { useState } from "react";
 import { motion } from "framer-motion";
@@ -19,20 +20,8 @@ import { motion } from "framer-motion";
  * 2) Garanta Tailwind configurado (postcss + globals.css). As classes desta página usam apenas utilitários padrão.
  * 3) Salve este arquivo em `app/page.tsx`.
  * 4) Personalize links, e-mails e textos conforme necessário.
+ * 5) Certifique-se de que as imagens `/logo.jpg` e `/home-foto.jpg` estão em `public/`.
  */
-
-// Paleta de cores (compatível com Tailwind via classes) — também exposta como CSS vars
-const palette = {
-  primary: "#BF1B28", // Azul para realces e links
-  accent: "#F29422",  // Laranja para destaques
-  angolaRed: "#BF1B28",
-  green: "#278C41",
-  beige: "#F2E8DC",
-  neutralBg: "#FFFFFF",
-  neutralCard: "#F2E8DC",
-  neutralText: "#000000",
-  neutralMuted: "#6B6B6B",
-};
 
 export default function Page() {
   const [form, setForm] = useState({ nome: "", email: "", org: "", mensagem: "" });
@@ -57,36 +46,34 @@ export default function Page() {
     setSent(true);
   }
 
+  // Função para rolagem suave
+  function handleSmoothScroll(e: React.MouseEvent<HTMLAnchorElement>, href: string) {
+    e.preventDefault();
+    const targetId = href.replace("#", "");
+    const element = document.getElementById(targetId);
+    if (element) {
+      window.scrollTo({
+        top: element.offsetTop - 80, // Ajuste para compensar header fixo
+        behavior: "smooth",
+      });
+      setIsOpen(false); // Fecha o menu mobile após clique
+    }
+  }
+
   return (
-    <main
-      className="min-h-screen w-full text-base"
-      style={{
-        // CSS Vars para fácil branding
-        // @ts-ignore
-        "--primary": palette.primary,
-        "--accent": palette.accent,
-        "--angola-red": palette.angolaRed,
-        "--green": palette.green,
-        "--beige": palette.beige,
-        "--neutral-bg": palette.neutralBg,
-        "--neutral-card": palette.neutralCard,
-        "--neutral-text": palette.neutralText,
-        "--neutral-muted": palette.neutralMuted,
-      } as React.CSSProperties}
-    >
+    <main className="min-h-screen w-full text-base">
       {/* HEADER */}
       <header className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-white/90 bg-white/80 border-b border-black/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
             <a href="#" className="flex justify-center items-center gap-2 group">
-              <div className="w-20 h-20 mt-9"
-                style={{  }}>
-                  <Image 
-                    src="/logo.jpg" 
-                    alt="Descrição da imagem logo" 
-                    width={200}    // Ajuste para a largura real da imagem
-                    height={100}   // Ajuste para a altura real da imagem
-                  />
+              <div className="w-20 h-20 mt-9">
+                <Image 
+                  src="/logo.jpg" 
+                  alt="Logotipo do Programa de Adesão" 
+                  width={200}
+                  height={100}
+                />
               </div>
               <div>
                 <p className="text-sm font-semibold tracking-wide text-black leading-tight">Programa de Adesão</p>
@@ -102,11 +89,10 @@ export default function Page() {
                 ["FAQ", "#faq"],
                 ["Contacto", "#contacto"],
               ].map(([label, href]) => (
-                <a key={href} href={href} className="text-gray-700 hover:text-black transition-colors">{label}</a>
+                <a key={href} href={href} onClick={(e) => handleSmoothScroll(e, href)} className="text-gray-700 hover:text-black transition-colors">{label}</a>
               ))}
             </nav>
-            <a href="#contacto" className="hidden md:inline-flex px-8 py-2 rounded-xl font-semibold"
-               style={{ backgroundColor: "var(--primary)", color: "white" }}>
+            <a href="#contacto" onClick={(e) => handleSmoothScroll(e, "#contacto")} className="hidden md:inline-flex px-8 py-2 rounded-xl font-semibold bg-[var(--primary)] text-white">
               Falar com a Equipa
             </a>
             <button
@@ -138,10 +124,9 @@ export default function Page() {
                 ["FAQ", "#faq"],
                 ["Contacto", "#contacto"],
               ].map(([label, href]) => (
-                <a key={href} href={href} className="text-gray-700 hover:text-black transition-colors" onClick={() => setIsOpen(false)}>{label}</a>
+                <a key={href} href={href} onClick={(e) => handleSmoothScroll(e, href)} className="text-gray-700 hover:text-black transition-colors">{label}</a>
               ))}
-              <a href="#contacto" className="px-4 py-2 rounded-xl font-semibold text-center"
-                 style={{ backgroundColor: "#BF1B28", color: "white" }} onClick={() => setIsOpen(false)}>
+              <a href="#contacto" onClick={(e) => handleSmoothScroll(e, "#contacto")} className="px-4 py-2 rounded-xl font-semibold text-center bg-[var(--primary)] text-white">
                 Falar com a Equipa
               </a>
             </div>
@@ -150,9 +135,8 @@ export default function Page() {
       </header>
 
       {/* HERO */}
-      <section className="relative overflow-hidden" style={{ backgroundColor: "var(--neutral-bg)", color: "var(--neutral-text)" }}>
-        <div className="absolute inset-0 opacity-10"
-             style={{ background: `radial-gradient(1200px 600px at 20% -10%, var(--angola-red), transparent 60%), radial-gradient(800px 400px at 120% 20%, var(--primary), transparent 60%)` }} />
+      <section className="relative overflow-hidden bg-[var(--neutral-bg)] text-[var(--neutral-text)]">
+        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(1200px_600px_at_20%_-10%,var(--angola-red),transparent_60%),radial-gradient(800px_400px_at_120%_20%,var(--primary),transparent_60%)]" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 relative">
           <div className="grid md:grid-cols-2 gap-10 items-center">
             <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
@@ -163,8 +147,8 @@ export default function Page() {
                 Plataforma oficial para divulgar o <strong>Programa de Adesão de Angola</strong> à <strong>SADC Free Trade Area</strong> e à <strong>AfCFTA (União Africana)</strong>, com informação, documentos e canais de contacto para empresas e instituições.
               </p>
               <div className="mt-6 flex flex-wrap gap-3">
-                <a href="#beneficios" className="px-9 py-3 rounded-xl font-semibold" style={{ backgroundColor: "#278C41", color: "white" }}>Ver Benefícios</a>
-                <a href="#recursos" className="px-5 py-3 rounded-xl font-semibold border border-black/20 hover:border-black/40">Guias & Documentos</a>
+                <a href="#beneficios" onClick={(e) => handleSmoothScroll(e, "#beneficios")} className="px-9 py-3 rounded-xl font-semibold bg-[var(--green)] text-white">Ver Benefícios</a>
+                <a href="#recursos" onClick={(e) => handleSmoothScroll(e, "#recursos")} className="px-5 py-3 rounded-xl font-semibold border border-black/20 hover:border-black/40">Guias & Documentos</a>
               </div>
               <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
                 {[
@@ -184,9 +168,9 @@ export default function Page() {
               <div className="relative rounded-3xl overflow-hidden border border-black/10 shadow-2xl">
                 <Image 
                   src="/home-foto.jpg" 
-                  alt="Descrição da imagem home-foto" 
-                  width={1200}   // Ajuste para a largura real da imagem
-                  height={800}   // Ajuste para a altura real da imagem
+                  alt="Imagem representativa do comércio e integração de Angola com SADC e AfCFTA" 
+                  width={1200}
+                  height={800}
                 />
                 <div className="absolute inset-0 p-4 flex items-end justify-between">
                   <span className="text-xs bg-white/60 px-3 py-1 rounded-full">SADC • AfCFTA • Angola</span>
@@ -199,7 +183,7 @@ export default function Page() {
       </section>
 
       {/* SOBRE */}
-      <section id="sobre" className="py-16 md:py-24" style={{ backgroundColor: "var(--neutral-bg)", color: "var(--neutral-text)" }}>
+      <section id="sobre" className="py-16 md:py-24 bg-[var(--neutral-bg)] text-[var(--neutral-text)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-3 gap-10">
           <div className="lg:col-span-2">
             <h2 className="text-2xl md:text-3xl font-bold">Sobre o Programa</h2>
@@ -221,7 +205,7 @@ export default function Page() {
             </div>
           </div>
           <aside className="space-y-4">
-            <div className="rounded-2xl p-5 border border-black/10" style={{ backgroundColor: "var(--beige)" }}>
+            <div className="rounded-2xl p-5 border border-black/10 bg-[var(--beige)]">
               <p className="text-sm text-gray-700">Status sintetizado</p>
               <ul className="mt-2 text-sm list-disc pl-5 space-y-2">
                 <li><strong>AfCFTA</strong>: Angola é <em>Estado Parte</em> (depósito de ratificação em 2020).</li>
@@ -229,7 +213,7 @@ export default function Page() {
                 <li><strong>Âmbito</strong>: Redução gradativa de tarifas (até 90%) e remoção de barreiras não-tarifárias.</li>
               </ul>
             </div>
-            <div className="rounded-2xl p-5 border border-black/10" style={{ backgroundColor: "var(--beige)" }}>
+            <div className="rounded-2xl p-5 border border-black/10 bg-[var(--beige)]">
               <p className="text-sm text-gray-700">Canais de Informação</p>
               <ul className="mt-2 space-y-2 text-sm">
                 <li>Secretariado SADC • Portal TIFI</li>
@@ -242,7 +226,7 @@ export default function Page() {
       </section>
 
       {/* BENEFÍCIOS */}
-      <section id="beneficios" className="py-16 md:py-24" style={{ backgroundColor: "var(--neutral-bg)", color: "var(--neutral-text)" }}>
+      <section id="beneficios" className="py-16 md:py-24 bg-[var(--neutral-bg)] text-[var(--neutral-text)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl md:text-3xl font-bold">Benefícios esperados</h2>
           <div className="mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -273,7 +257,7 @@ export default function Page() {
       </section>
 
       {/* MARCOS / TIMELINE */}
-      <section id="marcos" className="py-16 md:py-24" style={{ backgroundColor: "var(--neutral-bg)", color: "var(--neutral-text)" }}>
+      <section id="marcos" className="py-16 md:py-24 bg-[var(--neutral-bg)] text-[var(--neutral-text)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl md:text-3xl font-bold">Marcos principais</h2>
           <ol className="mt-8 relative border-l border-black/10 pl-6 space-y-8">
@@ -297,7 +281,7 @@ export default function Page() {
       </section>
 
       {/* RECURSOS / DOCUMENTOS */}
-      <section id="recursos" className="py-16 md:py-24" style={{ backgroundColor: "var(--neutral-bg)", color: "var(--neutral-text)" }}>
+      <section id="recursos" className="py-16 md:py-24 bg-[var(--neutral-bg)] text-[var(--neutral-text)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl md:text-3xl font-bold">Recursos oficiais</h2>
           <div className="mt-6 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -344,7 +328,7 @@ export default function Page() {
       </section>
 
       {/* FAQ */}
-      <section id="faq" className="py-16 md:py-24" style={{ backgroundColor: "var(--neutral-bg)", color: "var(--neutral-text)" }}>
+      <section id="faq" className="py-16 md:py-24 bg-[var(--neutral-bg)] text-[var(--neutral-text)]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl md:text-3xl font-bold">Perguntas frequentes</h2>
           <div className="mt-6 divide-y divide-black/10 border border-black/10 rounded-2xl overflow-hidden">
@@ -362,7 +346,7 @@ export default function Page() {
                 a: "Sim. O Programa prevê capacitação, informação sobre requisitos e facilitação de acesso a feiras e financiamento comercial.",
               },
             ].map((f, i) => (
-              <details key={i} className="group bg-black/5 open:bg-black/10 ">
+              <details key={i} className="group bg-black/5 open:bg-black/10">
                 <summary className="list-none cursor-pointer p-5 font-semibold flex items-center justify-between">
                   {f.q}
                   <span className="text-xs text-gray-500 group-open:rotate-45 transition-transform">＋</span>
@@ -375,7 +359,7 @@ export default function Page() {
       </section>
 
       {/* CONTACTO */}
-      <section id="contacto" className="py-16 md:py-24" style={{ backgroundColor: "var(--neutral-bg)", color: "var(--neutral-text)" }}>
+      <section id="contacto" className="py-16 md:py-24 bg-[var(--neutral-bg)] text-[var(--neutral-text)]">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl md:text-3xl font-bold">Entre em contacto</h2>
           <p className="mt-2 text-gray-600">Use o formulário para dúvidas, parcerias e imprensa.</p>
@@ -419,8 +403,7 @@ export default function Page() {
             </div>
 
             <div className="flex flex-wrap items-center gap-4">
-              <button type="submit" className="px-5 py-3 rounded-xl font-semibold disabled:opacity-60"
-                      style={{ backgroundColor: "var(--primary)", color: "white" }} disabled={sent}>
+              <button type="submit" className="px-5 py-3 rounded-xl font-semibold disabled:opacity-60 bg-[var(--primary)] text-white" disabled={sent}>
                 {sent ? "Enviado ✓" : "Enviar mensagem"}
               </button>
               <a href={`mailto:contacto@exemplo.gov.ao?subject=Contacto%20Programa%20de%20Ades%C3%A3o&body=Nome:%20${encodeURIComponent(form.nome)}%0AEmail:%20${encodeURIComponent(form.email)}%0AOrg:%20${encodeURIComponent(form.org)}%0AMensagem:%20${encodeURIComponent(form.mensagem)}`}
@@ -437,15 +420,15 @@ export default function Page() {
       </section>
 
       {/* FOOTER */}
-      <footer className="py-10 border-t border-black/10" style={{ backgroundColor: "var(--neutral-bg)", color: "var(--neutral-text)" }}>
+      <footer className="py-10 border-t border-black/10 bg-[var(--neutral-bg)] text-[var(--neutral-text)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-sm flex flex-col md:flex-row gap-4 md:items-center md:justify-between">
           <p className="text-gray-500">© {new Date().getFullYear()} Programa de Adesão • República de Angola</p>
           <div className="flex flex-wrap gap-3 items-center">
-            <a href="#sobre" className="hover:underline">Sobre</a>
-            <a href="#recursos" className="hover:underline">Recursos</a>
-            <a href="#contacto" className="hover:underline">Contacto</a>
+            <a href="#sobre" onClick={(e) => handleSmoothScroll(e, "#sobre")} className="hover:underline">Sobre</a>
+            <a href="#recursos" onClick={(e) => handleSmoothScroll(e, "#recursos")} className="hover:underline">Recursos</a>
+            <a href="#contacto" onClick={(e) => handleSmoothScroll(e, "#contacto")} className="hover:underline">Contacto</a>
             <span className="inline-flex items-center gap-1 text-gray-500">
-              <span className="w-2 h-2 rounded-full" style={{ backgroundColor: "var(--accent)" }}></span>
+              <span className="w-2 h-2 rounded-full bg-[var(--accent)]"></span>
               <span>Actualizado {new Date().toLocaleDateString("pt-PT")}</span>
             </span>
           </div>
@@ -454,4 +437,3 @@ export default function Page() {
     </main>
   );
 }
-
