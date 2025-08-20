@@ -63,7 +63,7 @@ export default function Page() {
   return (
     <main className="min-h-screen w-full text-base">
       {/* HEADER */}
-      <header className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-white/90 bg-white/80 border-b border-black/10">
+      <header className="sticky p-3 top-0 z-50 backdrop-blur bg-white border-b  border-gradient" style={{ borderImage: 'linear-gradient(to right, #ff0000, #ffa500, #ffff00) 1' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
             <a href="#" className="flex justify-center items-center gap-2 group">
@@ -76,8 +76,6 @@ export default function Page() {
                 />
               </div>
               <div>
-                <p className="text-sm font-semibold tracking-wide text-black leading-tight">Programa de Adesão</p>
-                <p className="text-[10px] uppercase tracking-[0.2em] text-gray-600">Angola • SADC & UA (AfCFTA)</p>
               </div>
             </a>
             <nav className="hidden md:flex items-center gap-6 text-sm">
@@ -92,7 +90,7 @@ export default function Page() {
                 <a key={href} href={href} onClick={(e) => handleSmoothScroll(e, href)} className="text-gray-700 hover:text-black transition-colors">{label}</a>
               ))}
             </nav>
-            <a href="#contacto" onClick={(e) => handleSmoothScroll(e, "#contacto")} className="hidden md:inline-flex px-8 py-2 rounded-xl font-semibold bg-[var(--primary)] text-white">
+            <a href="#contacto" onClick={(e) => handleSmoothScroll(e, "#contacto")} className="hidden md:inline-flex px-8 py-3 rounded-xl font-semibold bg-[var(--primary)] text-white">
               Falar com a Equipa
             </a>
             <button
@@ -113,7 +111,7 @@ export default function Page() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden absolute left-0 right-0 bg-white border-b border-black/10 shadow-lg"
+            className="md:hidden absolute left-0 right-0 bg-white border-b border-gradient" style={{ borderImage: 'linear-gradient(to right, #ff0000, #ffa500, #ffff00) 1' }}
           >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col gap-4 text-sm">
               {[
@@ -126,14 +124,13 @@ export default function Page() {
               ].map(([label, href]) => (
                 <a key={href} href={href} onClick={(e) => handleSmoothScroll(e, href)} className="text-gray-700 hover:text-black transition-colors">{label}</a>
               ))}
-              <a href="#contacto" onClick={(e) => handleSmoothScroll(e, "#contacto")} className="px-4 py-2 rounded-xl font-semibold text-center bg-[var(--primary)] text-white">
+              <a href="#contacto" onClick={(e) => handleSmoothScroll(e, "#contacto")} className="px-4 py-2 rounded-xl font-semibold text-center bg-[] text-white">
                 Falar com a Equipa
               </a>
             </div>
           </motion.nav>
         )}
       </header>
-
       {/* HERO */}
       <section className="relative overflow-hidden bg-[var(--neutral-bg)] text-[var(--neutral-text)]">
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(1200px_600px_at_20%_-10%,var(--angola-red),transparent_60%),radial-gradient(800px_400px_at_120%_20%,var(--primary),transparent_60%)]" />
