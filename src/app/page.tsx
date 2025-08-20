@@ -1,434 +1,168 @@
+// src/app/page.tsx
 "use client";
 
-import Image from 'next/image';
-import React, { useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
+import { Menu, X, FileDown } from "lucide-react";
 
-/**
- * Next.js (App Router) single-file landing page for:
- * "Programa de Adesão de Angola às Zonas de Comércio Livre da SADC e da União Africana (AfCFTA)"
- *
- * ✔ 100% responsivo (mobile-first)
- * ✔ Tipografia legível, hierarquia clara
- * ✔ Paleta inspirada em Angola (vermelho, preto, dourado) + realce SADC (azul)
- * ✔ Call-to-action e formulário de contacto (client-side)
- * ✔ Seções: Hero, Sobre, Benefícios, Marcos/Timeline, Perguntas Frequentes, Recursos, Contacto
- * ✔ Acessível: contrastes altos, labels, focus states, aria-attrs
- *
- * Como usar no Next.js (App Router):
- * 1) Instale dependências: `npm i framer-motion`
- * 2) Garanta Tailwind configurado (postcss + globals.css). As classes desta página usam apenas utilitários padrão.
- * 3) Salve este arquivo em `app/page.tsx`.
- * 4) Personalize links, e-mails e textos conforme necessário.
- * 5) Certifique-se de que as imagens `/logo.jpg` e `/home-foto.jpg` estão em `public/`.
- */
-
-export default function Page() {
-  const [form, setForm] = useState({ nome: "", email: "", org: "", mensagem: "" });
-  const [sent, setSent] = useState(false);
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  const [isOpen, setIsOpen] = useState(false);
-
-  function validate() {
-    const e: Record<string, string> = {};
-    if (!form.nome.trim()) e.nome = "Informe o seu nome";
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = "E-mail inválido";
-    if (!form.mensagem.trim()) e.mensagem = "Escreva a sua mensagem";
-    setErrors(e);
-    return Object.keys(e).length === 0;
-  }
-
-  function submit(evn: React.FormEvent) {
-    evn.preventDefault();
-    if (!validate()) return;
-    // Exemplo: substitua por uma rota API (/app/api/contato/route.ts) ou serviço externo (Formspree)
-    console.log("Contacto recebido:", form);
-    setSent(true);
-  }
-
-  // Função para rolagem suave
-  function handleSmoothScroll(e: React.MouseEvent<HTMLAnchorElement>, href: string) {
-    e.preventDefault();
-    const targetId = href.replace("#", "");
-    const element = document.getElementById(targetId);
-    if (element) {
-      window.scrollTo({
-        top: element.offsetTop - 80, // Ajuste para compensar header fixo
-        behavior: "smooth",
-      });
-      setIsOpen(false); // Fecha o menu mobile após clique
-    }
-  }
+export default function Home() {
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <main className="min-h-screen w-full text-base">
-      {/* HEADER */}
-      <header className="sticky p-3 top-0 z-50 backdrop-blur bg-white border-b  border-gradient" style={{ borderImage: 'linear-gradient(to right, #ff0000, #ffa500, #ffff00) 1' }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 items-center justify-between">
-            <a href="#" className="flex justify-center items-center gap-2 group">
-              <div className="w-20 h-20 mt-9">
-                <Image 
-                  src="/logo.jpg" 
-                  alt="Logotipo do Programa de Adesão" 
-                  width={200}
-                  height={100}
-                />
-              </div>
-              <div>
-              </div>
-            </a>
-            <nav className="hidden md:flex items-center gap-6 text-sm">
-              {[
-                ["Sobre", "#sobre"],
-                ["Benefícios", "#beneficios"],
-                ["Marcos", "#marcos"],
-                ["Recursos", "#recursos"],
-                ["FAQ", "#faq"],
-                ["Contacto", "#contacto"],
-              ].map(([label, href]) => (
-                <a key={href} href={href} onClick={(e) => handleSmoothScroll(e, href)} className="text-gray-700 hover:text-black transition-colors">{label}</a>
-              ))}
-            </nav>
-            <a href="#contacto" onClick={(e) => handleSmoothScroll(e, "#contacto")} className="hidden md:inline-flex px-8 py-3 rounded-xl font-semibold bg-[var(--primary)] text-white">
-              Falar com a Equipa
-            </a>
-            <button
-              className="md:hidden flex items-center justify-center w-10 h-10"
-              onClick={() => setIsOpen(!isOpen)}
-              aria-label="Abrir menu"
-            >
-              <svg className="text-black" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="3" y1="12" x2="21" y2="12"></line>
-                <line x1="3" y1="6" x2="21" y2="6"></line>
-                <line x1="3" y1="18" x2="21" y2="18"></line>
-              </svg>
-            </button>
-          </div>
-        </div>
-        {isOpen && (
-          <motion.nav
+    <main className="min-h-screen bg-white text-gray-900">
+      {/* Navbar */}
+      <header className="fixed top-0 left-0 w-full bg-white shadow-md z-50">
+        <nav className="max-w-7xl mx-auto flex items-center justify-between p-4">
+          <h1 className="text-xl font-bold text-[#BF1B28]">
+            Angola • Integração Regional
+          </h1>
+
+          {/* Desktop Menu */}
+          <ul className="hidden md:flex space-x-6 text-sm font-medium">
+            <li><a href="#sobre" className="hover:text-[#1F67A6]">Sobre</a></li>
+            <li><a href="#proposta" className="hover:text-[#278C41]">Proposta</a></li>
+            <li><a href="#discursos" className="hover:text-[#F29422]">Discursos</a></li>
+            <li><a href="#beneficios" className="hover:text-[#BF1B28]">Benefícios</a></li>
+            <li><a href="#contacto" className="hover:text-[#1F67A6]">Contacto</a></li>
+          </ul>
+
+          {/* Mobile Menu Button */}
+          <button
+            className="md:hidden"
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            {menuOpen ? <X size={28} /> : <Menu size={28} />}
+          </button>
+        </nav>
+
+        {/* Mobile Menu */}
+        {menuOpen && (
+          <motion.ul
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-            className="md:hidden absolute left-0 right-0 bg-white border-b border-gradient" style={{ borderImage: 'linear-gradient(to right, #ff0000, #ffa500, #ffff00) 1' }}
+            className="md:hidden bg-[#F2E8DC] p-4 space-y-4 font-medium"
           >
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col gap-4 text-sm">
-              {[
-                ["Sobre", "#sobre"],
-                ["Benefícios", "#beneficios"],
-                ["Marcos", "#marcos"],
-                ["Recursos", "#recursos"],
-                ["FAQ", "#faq"],
-                ["Contacto", "#contacto"],
-              ].map(([label, href]) => (
-                <a key={href} href={href} onClick={(e) => handleSmoothScroll(e, href)} className="text-gray-700 hover:text-black transition-colors">{label}</a>
-              ))}
-              <a href="#contacto" onClick={(e) => handleSmoothScroll(e, "#contacto")} className="px-4 py-2 rounded-xl font-semibold text-center bg-[] text-white">
-                Falar com a Equipa
-              </a>
-            </div>
-          </motion.nav>
+            <li><a href="#sobre" onClick={() => setMenuOpen(false)}>Sobre</a></li>
+            <li><a href="#proposta" onClick={() => setMenuOpen(false)}>Proposta</a></li>
+            <li><a href="#discursos" onClick={() => setMenuOpen(false)}>Discursos</a></li>
+            <li><a href="#beneficios" onClick={() => setMenuOpen(false)}>Benefícios</a></li>
+            <li><a href="#contacto" onClick={() => setMenuOpen(false)}>Contacto</a></li>
+          </motion.ul>
         )}
       </header>
-      {/* HERO */}
-      <section className="relative overflow-hidden bg-[var(--neutral-bg)] text-[var(--neutral-text)]">
-        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(1200px_600px_at_20%_-10%,var(--angola-red),transparent_60%),radial-gradient(800px_400px_at_120%_20%,var(--primary),transparent_60%)]" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 relative">
-          <div className="grid md:grid-cols-2 gap-10 items-center">
-            <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight">
-                Angola rumo à integração plena nas Zonas de Comércio Livre
-              </h1>
-              <p className="mt-4 text-gray-600 max-w-prose">
-                Plataforma oficial para divulgar o <strong>Programa de Adesão de Angola</strong> à <strong>SADC Free Trade Area</strong> e à <strong>AfCFTA (União Africana)</strong>, com informação, documentos e canais de contacto para empresas e instituições.
-              </p>
-              <div className="mt-6 flex flex-wrap gap-3">
-                <a href="#beneficios" onClick={(e) => handleSmoothScroll(e, "#beneficios")} className="px-9 py-3 rounded-xl font-semibold bg-[var(--green)] text-white">Ver Benefícios</a>
-                <a href="#recursos" onClick={(e) => handleSmoothScroll(e, "#recursos")} className="px-5 py-3 rounded-xl font-semibold border border-black/20 hover:border-black/40">Guias & Documentos</a>
-              </div>
-              <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
-                {[
-                  { k: "Estados SADC na ZCL", v: "13→14" },
-                  { k: "AfCFTA: Estado de Parte", v: "Desde 2020" },
-                  { k: "Redução Tarifária", v: "até 90%" },
-                  { k: "População Mercado", v: "1.3B+" },
-                ].map((i) => (
-                  <div key={i.k} className="rounded-2xl p-4 border border-black/10 bg-black/5">
-                    <p className="text-sm text-gray-500">{i.k}</p>
-                    <p className="text-xl font-bold">{i.v}</p>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-            <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}>
-              <div className="relative rounded-3xl overflow-hidden border border-black/10 shadow-2xl">
-                <Image 
-                  src="/home-foto.jpg" 
-                  alt="Imagem representativa do comércio e integração de Angola com SADC e AfCFTA" 
-                  width={1200}
-                  height={800}
-                />
-                <div className="absolute inset-0 p-4 flex items-end justify-between">
-                  <span className="text-xs bg-white/60 px-3 py-1 rounded-full">SADC • AfCFTA • Angola</span>
-                  <span className="text-xs bg-white/60 px-3 py-1 rounded-full">Comércio & Integração</span>
-                </div>
-              </div>
-            </motion.div>
-          </div>
+
+      {/* Hero */}
+      <section className="relative h-[90vh] flex flex-col items-center justify-center text-center px-6">
+        <h2 className="text-4xl md:text-6xl font-bold text-[#1F67A6]">
+          Angola rumo à Integração Regional
+        </h2>
+        <p className="mt-4 text-lg text-gray-700 max-w-2xl">
+          Programa de Adesão de Angola às Zonas de Comércio Livre da SADC e da União Africana.
+        </p>
+        <a
+          href="#contacto"
+          className="mt-6 px-6 py-3 rounded-2xl bg-[#BF1B28] text-white font-semibold hover:bg-[#a51520] transition"
+        >
+          Entre em Contacto
+        </a>
+      </section>
+
+      {/* Sobre */}
+      <section id="sobre" className="py-20 max-w-5xl mx-auto px-6">
+        <h3 className="text-3xl font-bold text-[#278C41] mb-6">Sobre o Programa</h3>
+        <p className="text-gray-700 leading-relaxed">
+          Angola aderiu formalmente à Zona de Comércio Livre da SADC em junho de 2025, 
+          consolidando a sua participação no processo de integração regional africana. 
+          Este passo abre oportunidades significativas para exportações, diversificação económica 
+          e fortalecimento do empresariado nacional. 
+          <br /><br />
+          A nível continental, Angola ratificou a Zona de Comércio Livre Continental Africana (ZCLCA), 
+          criando acesso a um mercado de 1,3 bilião de consumidores.
+        </p>
+      </section>
+
+      {/* Proposta */}
+      <section id="proposta" className="py-20 bg-[#F2E8DC] px-6">
+        <div className="max-w-5xl mx-auto">
+          <h3 className="text-3xl font-bold text-[#1F67A6] mb-6">
+            Proposta de Intervenção
+          </h3>
+          <p className="text-gray-800 leading-relaxed">
+            Discurso de Sua Excelência o Senhor Ministro da Indústria e Comércio, 
+            dirigido ao sector privado e à sociedade civil em geral, Julho de 2025.
+          </p>
+          <a
+            href="/docs/proposta.pdf"
+            download
+            className="inline-flex items-center mt-6 px-6 py-3 rounded-2xl bg-[#278C41] text-white font-semibold hover:bg-[#1e6b34] transition"
+          >
+            <FileDown className="mr-2" size={20} /> Baixar PDF
+          </a>
         </div>
       </section>
 
-      {/* SOBRE */}
-      <section id="sobre" className="py-16 md:py-24 bg-[var(--neutral-bg)] text-[var(--neutral-text)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-3 gap-10">
-          <div className="lg:col-span-2">
-            <h2 className="text-2xl md:text-3xl font-bold">Sobre o Programa</h2>
-            <p className="mt-4 text-gray-600 leading-relaxed">
-              O Programa de Adesão coordena medidas jurídicas, aduaneiras, de facilitação do comércio e de comunicação para alinhar Angola aos mecanismos da <strong>Zona de Comércio Livre da SADC</strong> e à <strong>Área de Livre Comércio Continental Africana (AfCFTA)</strong>. Inclui reformas tarifárias, regras de origem, janela única, e capacitação do sector privado.
+      {/* Discursos */}
+      <section id="discursos" className="py-20 max-w-5xl mx-auto px-6">
+        <h3 className="text-3xl font-bold text-[#F29422] mb-6">Discursos e Publicações</h3>
+        <div className="space-y-4">
+          <div className="p-6 border rounded-2xl shadow-sm hover:shadow-md transition">
+            <h4 className="font-semibold text-[#BF1B28]">
+              Angola e o Futuro Continental: ZCLCA
+            </h4>
+            <p className="text-sm text-gray-700 mt-2">
+              Análise do economista Arsénio Bumba sobre as oportunidades da integração de Angola na AfCFTA.
             </p>
-            <div className="mt-6 grid sm:grid-cols-2 gap-4">
-              {[
-                { title: "Harmonização Legal", desc: "Adequação de pautas, protocolos e procedimentos." },
-                { title: "Digitalização", desc: "Plataformas para certificados, licenças e reporte de barreiras." },
-                { title: "Competitividade", desc: "Apoio a PME, exportadores e cadeia de valor regional." },
-                { title: "Transparência", desc: "Calendário de liberalização e monitorização pública." },
-              ].map((c) => (
-                <div key={c.title} className="rounded-2xl p-5 border border-black/10 bg-black/5">
-                  <p className="font-semibold">{c.title}</p>
-                  <p className="text-gray-600 text-sm mt-1">{c.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-          <aside className="space-y-4">
-            <div className="rounded-2xl p-5 border border-black/10 bg-[var(--beige)]">
-              <p className="text-sm text-gray-700">Status sintetizado</p>
-              <ul className="mt-2 text-sm list-disc pl-5 space-y-2">
-                <li><strong>AfCFTA</strong>: Angola é <em>Estado Parte</em> (depósito de ratificação em 2020).</li>
-                <li><strong>SADC FTA</strong>: Angola em fase final de adesão, tornando-se o 14.º membro participante.</li>
-                <li><strong>Âmbito</strong>: Redução gradativa de tarifas (até 90%) e remoção de barreiras não-tarifárias.</li>
-              </ul>
-            </div>
-            <div className="rounded-2xl p-5 border border-black/10 bg-[var(--beige)]">
-              <p className="text-sm text-gray-700">Canais de Informação</p>
-              <ul className="mt-2 space-y-2 text-sm">
-                <li>Secretariado SADC • Portal TIFI</li>
-                <li>União Africana • AfCFTA Secretariat</li>
-                <li>MinFin, MEP, MIREX, MINDCOM (Angola)</li>
-              </ul>
-            </div>
-          </aside>
-        </div>
-      </section>
-
-      {/* BENEFÍCIOS */}
-      <section id="beneficios" className="py-16 md:py-24 bg-[var(--neutral-bg)] text-[var(--neutral-text)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl md:text-3xl font-bold">Benefícios esperados</h2>
-          <div className="mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {[
-              {
-                title: "Acesso ampliado a mercados",
-                desc: "Preferências tarifárias na SADC e, de forma faseada, no continente sob a AfCFTA.",
-              },
-              {
-                title: "Integração de cadeias de valor",
-                desc: "Mais competitividade para agroindústria, mineração transformadora e manufaturas.",
-              },
-              {
-                title: "Facilitação do comércio",
-                desc: "Procedimentos aduaneiros modernizados, regras de origem claras e reporte de BNTs.",
-              },
-              { title: "Investimento & emprego", desc: "Ambiente mais previsível para IDE e inovação, com impacto no emprego." },
-              { title: "Diversificação", desc: "Menos dependência de petróleo, mais exportações de bens e serviços." },
-              { title: "PME no centro", desc: "Capacitação, feiras, missões empresariais e financiamento comercial." },
-            ].map((c) => (
-              <div key={c.title} className="rounded-2xl p-5 border border-black/10 bg-black/5">
-                <p className="font-semibold">{c.title}</p>
-                <p className="text-gray-600 text-sm mt-1">{c.desc}</p>
-              </div>
-            ))}
           </div>
         </div>
       </section>
 
-      {/* MARCOS / TIMELINE */}
-      <section id="marcos" className="py-16 md:py-24 bg-[var(--neutral-bg)] text-[var(--neutral-text)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl md:text-3xl font-bold">Marcos principais</h2>
-          <ol className="mt-8 relative border-l border-black/10 pl-6 space-y-8">
-            {[
-              { data: "2018", titulo: "Assinatura do Acordo AfCFTA (Kigali)", detalhe: "Angola entre os signatários." },
-              { data: "2020", titulo: "Ratificação AfCFTA por Angola", detalhe: "Depósito dos instrumentos e status de Estado Parte." },
-              { data: "2021–2024", titulo: "Arranque operacional AfCFTA", detalhe: "Faseada implementação, regras de origem e GTI." },
-              { data: "2024–2025", titulo: "Angola finaliza adesão à SADC FTA", detalhe: "Conclusão técnica no âmbito da SADC, rumo à formalização." },
-            ].map((m, idx) => (
-              <li key={idx} className="ml-2">
-                <div className="absolute -left-[9px] mt-1 w-4 h-4 rounded-full" style={{ backgroundColor: idx === 3 ? "var(--green)" : "var(--primary)" }} />
-                <div className="p-4 rounded-2xl border border-black/10 bg-black/5">
-                  <p className="text-sm text-gray-500">{m.data}</p>
-                  <p className="font-semibold">{m.titulo}</p>
-                  <p className="text-sm text-gray-600">{m.detalhe}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
+      {/* Benefícios */}
+      <section id="beneficios" className="py-20 bg-[#F2E8DC] px-6">
+        <div className="max-w-5xl mx-auto">
+          <h3 className="text-3xl font-bold text-[#278C41] mb-6">Benefícios da Adesão</h3>
+          <ul className="list-disc pl-6 space-y-2 text-gray-800">
+            <li>Acesso preferencial a mercados regionais.</li>
+            <li>Fortalecimento do empresariado nacional.</li>
+            <li>Promoção da diversificação económica.</li>
+            <li>Integração em cadeias de valor regionais e continentais.</li>
+          </ul>
         </div>
       </section>
 
-      {/* RECURSOS / DOCUMENTOS */}
-      <section id="recursos" className="py-16 md:py-24 bg-[var(--neutral-bg)] text-[var(--neutral-text)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl md:text-3xl font-bold">Recursos oficiais</h2>
-          <div className="mt-6 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {[
-              {
-                nome: "SADC • Free Trade Area (TIFI)",
-                href: "https://tis.sadc.int/french/regional-integration/tifi/sadc-free-trade-area/fta-brochure/",
-                desc: "Informações institucionais e brochuras sobre a ZCL da SADC.",
-              },
-              {
-                nome: "SADC • Comunicado sobre Angola",
-                href: "https://www.sadc.int/latest-news/angola-finalises-preparations-join-sadc-free-trade-area-strengthening-regional-economic",
-                desc: "Angola finaliza preparação para adesão como 14.º participante da ZCL.",
-              },
-              {
-                nome: "União Africana • AfCFTA",
-                href: "https://au.int/",
-                desc: "Acordo, protocolos e implementação continental (UA/Secretariado AfCFTA).",
-              },
-              {
-                nome: "UNECA • Nota sobre ratificação de Angola",
-                href: "https://www.uneca.org/storys/afcfta-expects-wave-ratifications-following-angola",
-                desc: "Angola como 30.º Estado Parte ao depositar os instrumentos (2020).",
-              },
-              {
-                nome: "TRALAC • Estado das ratificações",
-                href: "https://www.tralac.org/resources/infographic/13795-status-of-afcfta-ratification.html",
-                desc: "Panorama actualizado de assinaturas e ratificações do AfCFTA.",
-              },
-              {
-                nome: "Portal do Governo de Angola",
-                href: "https://governo.gov.ao/",
-                desc: "Notícias e documentos governamentais relevantes.",
-              },
-            ].map((r) => (
-              <a key={r.href} href={r.href} target="_blank" rel="noreferrer"
-                 className="rounded-2xl p-5 border border-black/10 bg-black/5 hover:border-black/30 transition-colors">
-                <p className="font-semibold">{r.nome}</p>
-                <p className="text-sm text-gray-600">{r.desc}</p>
-              </a>
-            ))}
-          </div>
-        </div>
+      {/* Contacto */}
+      <section id="contacto" className="py-20 max-w-3xl mx-auto px-6">
+        <h3 className="text-3xl font-bold text-[#1F67A6] mb-6">Entre em Contacto</h3>
+        <form className="space-y-4">
+          <input
+            type="text"
+            placeholder="Nome"
+            className="w-full p-3 border rounded-lg"
+            required
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            className="w-full p-3 border rounded-lg"
+            required
+          />
+          <textarea
+            placeholder="Mensagem"
+            className="w-full p-3 border rounded-lg h-32"
+            required
+          />
+          <button
+            type="submit"
+            className="w-full py-3 rounded-2xl bg-[#BF1B28] text-white font-semibold hover:bg-[#a51520] transition"
+          >
+            Enviar Mensagem
+          </button>
+        </form>
       </section>
 
-      {/* FAQ */}
-      <section id="faq" className="py-16 md:py-24 bg-[var(--neutral-bg)] text-[var(--neutral-text)]">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl md:text-3xl font-bold">Perguntas frequentes</h2>
-          <div className="mt-6 divide-y divide-black/10 border border-black/10 rounded-2xl overflow-hidden">
-            {[
-              {
-                q: "Quando Angola passa a beneficiar totalmente da ZCL da SADC?",
-                a: "Após a formalização da adesão e entrada em vigor do cronograma tarifário acordado; a implementação é faseada por sectores/produtos.",
-              },
-              {
-                q: "O que muda com a AfCFTA para as empresas?",
-                a: "Amplia mercados, reduz tarifas em até 90% ao longo do tempo e harmoniza regras de origem, com mecanismos para reportar barreiras não-tarifárias.",
-              },
-              {
-                q: "Há apoio para PME exportadoras?",
-                a: "Sim. O Programa prevê capacitação, informação sobre requisitos e facilitação de acesso a feiras e financiamento comercial.",
-              },
-            ].map((f, i) => (
-              <details key={i} className="group bg-black/5 open:bg-black/10">
-                <summary className="list-none cursor-pointer p-5 font-semibold flex items-center justify-between">
-                  {f.q}
-                  <span className="text-xs text-gray-500 group-open:rotate-45 transition-transform">＋</span>
-                </summary>
-                <div className="p-5 pt-0 text-gray-600 text-sm">{f.a}</div>
-              </details>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CONTACTO */}
-      <section id="contacto" className="py-16 md:py-24 bg-[var(--neutral-bg)] text-[var(--neutral-text)]">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl md:text-3xl font-bold">Entre em contacto</h2>
-          <p className="mt-2 text-gray-600">Use o formulário para dúvidas, parcerias e imprensa.</p>
-          <form onSubmit={submit} className="mt-6 grid grid-cols-1 gap-4">
-            <div>
-              <label className="block text-sm text-gray-600" htmlFor="nome">Nome</label>
-              <input id="nome" name="nome" value={form.nome}
-                     onChange={(e) => setForm({ ...form, nome: e.target.value })}
-                     className="mt-1 w-full rounded-xl bg-white/40 border border-black/10 p-3 outline-none focus:ring-2 focus:ring-[var(--primary)]"
-                     placeholder="O seu nome completo" />
-              {errors.nome && <p className="text-red-500 text-xs mt-1">{errors.nome}</p>}
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm text-gray-600" htmlFor="email">E-mail</label>
-                <input id="email" name="email" value={form.email}
-                       onChange={(e) => setForm({ ...form, email: e.target.value })}
-                       type="email"
-                       className="mt-1 w-full rounded-xl bg-white/40 border border-black/10 p-3 outline-none focus:ring-2 focus:ring-[var(--primary)]"
-                       placeholder="ex: nome@empresa.co.ao" />
-                {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
-              </div>
-              <div>
-                <label className="block text-sm text-gray-600" htmlFor="org">Organização (opcional)</label>
-                <input id="org" name="org" value={form.org}
-                       onChange={(e) => setForm({ ...form, org: e.target.value })}
-                       className="mt-1 w-full rounded-xl bg-white/40 border border-black/10 p-3 outline-none focus:ring-2 focus:ring-[var(--primary)]"
-                       placeholder="Empresa/Instituição" />
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-sm text-gray-600" htmlFor="mensagem">Mensagem</label>
-              <textarea id="mensagem" name="mensagem" value={form.mensagem}
-                        onChange={(e) => setForm({ ...form, mensagem: e.target.value })}
-                        rows={6}
-                        className="mt-1 w-full rounded-xl bg-white/40 border border-black/10 p-3 outline-none focus:ring-2 focus:ring-[var(--primary)]"
-                        placeholder="Como podemos ajudar?" />
-              {errors.mensagem && <p className="text-red-500 text-xs mt-1">{errors.mensagem}</p>}
-            </div>
-
-            <div className="flex flex-wrap items-center gap-4">
-              <button type="submit" className="px-5 py-3 rounded-xl font-semibold disabled:opacity-60 bg-[var(--primary)] text-white" disabled={sent}>
-                {sent ? "Enviado ✓" : "Enviar mensagem"}
-              </button>
-              <a href={`mailto:contacto@exemplo.gov.ao?subject=Contacto%20Programa%20de%20Ades%C3%A3o&body=Nome:%20${encodeURIComponent(form.nome)}%0AEmail:%20${encodeURIComponent(form.email)}%0AOrg:%20${encodeURIComponent(form.org)}%0AMensagem:%20${encodeURIComponent(form.mensagem)}`}
-                 className="text-sm underline underline-offset-4 hover:no-underline">
-                ou enviar por e-mail
-              </a>
-            </div>
-
-            {sent && (
-              <p className="text-sm text-green-500">Mensagem registada localmente. Integre uma rota API para envio real (ex.: Formspree ou servidor).</p>
-            )}
-          </form>
-        </div>
-      </section>
-
-      {/* FOOTER */}
-      <footer className="py-10 border-t border-black/10 bg-[var(--neutral-bg)] text-[var(--neutral-text)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-sm flex flex-col md:flex-row gap-4 md:items-center md:justify-between">
-          <p className="text-gray-500">© {new Date().getFullYear()} Programa de Adesão • República de Angola</p>
-          <div className="flex flex-wrap gap-3 items-center">
-            <a href="#sobre" onClick={(e) => handleSmoothScroll(e, "#sobre")} className="hover:underline">Sobre</a>
-            <a href="#recursos" onClick={(e) => handleSmoothScroll(e, "#recursos")} className="hover:underline">Recursos</a>
-            <a href="#contacto" onClick={(e) => handleSmoothScroll(e, "#contacto")} className="hover:underline">Contacto</a>
-            <span className="inline-flex items-center gap-1 text-gray-500">
-              <span className="w-2 h-2 rounded-full bg-[var(--accent)]"></span>
-              <span>Actualizado {new Date().toLocaleDateString("pt-PT")}</span>
-            </span>
-          </div>
+      {/* Footer */}
+      <footer className="bg-[#1F67A6] text-white py-6 mt-10">
+        <div className="max-w-5xl mx-auto text-center text-sm">
+          © 2025 Ministério da Indústria e Comércio de Angola. Todos os direitos reservados.
         </div>
       </footer>
     </main>
