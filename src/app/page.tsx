@@ -88,7 +88,7 @@ export default function Page() {
                 <p className="text-[10px] uppercase tracking-[0.2em] text-gray-300">Angola • SADC & UA (AfCFTA)</p>
               </div>
             </a>
-            <nav className="hidden md:flex items-center gap-6 text-sm">
+            <nav className="hidden text-amber-50 md:flex items-center gap-6 text-sm">
               {[
                 ["Sobre", "#sobre"],
                 ["Benefícios", "#beneficios"],
@@ -101,7 +101,7 @@ export default function Page() {
               ))}
             </nav>
             <a href="#contacto" className="hidden md:inline-flex px-4 py-2 rounded-xl font-semibold"
-               style={{ backgroundColor: "var(--primary)", color: "white" }}>
+              style={{ backgroundColor: "var(--primary)", color: "white" }}>
               Falar com a Equipa
             </a>
           </div>
@@ -338,9 +338,9 @@ export default function Page() {
             <div>
               <label className="block text-sm text-gray-300" htmlFor="nome">Nome</label>
               <input id="nome" name="nome" value={form.nome}
-                     onChange={(e) => setForm({ ...form, nome: e.target.value })}
-                     className="mt-1 w-full rounded-xl bg-black/40 border border-white/10 p-3 outline-none focus:ring-2 focus:ring-[var(--primary)]"
-                     placeholder="O seu nome completo" />
+              onChange={(e) => setForm({ ...form, nome: e.target.value })}
+              className="mt-1 w-full rounded-xl bg-black/40 border border-white/10 p-3 outline-none focus:ring-2 focus:ring-[var(--primary)]"
+              placeholder="O seu nome completo" />
               {errors.nome && <p className="text-red-400 text-xs mt-1">{errors.nome}</p>}
             </div>
 
@@ -348,35 +348,35 @@ export default function Page() {
               <div>
                 <label className="block text-sm text-gray-300" htmlFor="email">E-mail</label>
                 <input id="email" name="email" value={form.email}
-                       onChange={(e) => setForm({ ...form, email: e.target.value })}
-                       type="email"
-                       className="mt-1 w-full rounded-xl bg-black/40 border border-white/10 p-3 outline-none focus:ring-2 focus:ring-[var(--primary)]"
-                       placeholder="ex: nome@empresa.co.ao" />
+                onChange={(e) => setForm({ ...form, email: e.target.value })}
+                type="email"
+                className="mt-1 w-full rounded-xl bg-black/40 border border-white/10 p-3 outline-none focus:ring-2 focus:ring-[var(--primary)]"
+                placeholder="ex: nome@empresa.co.ao" />
                 {errors.email && <p className="text-red-400 text-xs mt-1">{errors.email}</p>}
               </div>
               <div>
                 <label className="block text-sm text-gray-300" htmlFor="org">Organização (opcional)</label>
                 <input id="org" name="org" value={form.org}
-                       onChange={(e) => setForm({ ...form, org: e.target.value })}
-                       className="mt-1 w-full rounded-xl bg-black/40 border border-white/10 p-3 outline-none focus:ring-2 focus:ring-[var(--primary)]"
-                       placeholder="Empresa/Instituição" />
+                onChange={(e) => setForm({ ...form, org: e.target.value })}
+                className="mt-1 w-full rounded-xl bg-black/40 border border-white/10 p-3 outline-none focus:ring-2 focus:ring-[var(--primary)]"
+                placeholder="Empresa/Instituição" />
               </div>
             </div>
 
             <div>
               <label className="block text-sm text-gray-300" htmlFor="mensagem">Mensagem</label>
               <textarea id="mensagem" name="mensagem" value={form.mensagem}
-                        onChange={(e) => setForm({ ...form, mensagem: e.target.value })}
-                        rows={6}
-                        className="mt-1 w-full rounded-xl bg-black/40 border border-white/10 p-3 outline-none focus:ring-2 focus:ring-[var(--primary)]"
-                        placeholder="Como podemos ajudar?" />
+              onChange={(e) => setForm({ ...form, mensagem: e.target.value })}
+              rows={6}
+              className="mt-1 w-full rounded-xl bg-black/40 border border-white/10 p-3 outline-none focus:ring-2 focus:ring-[var(--primary)]"
+              placeholder="Como podemos ajudar?" />
               {errors.mensagem && <p className="text-red-400 text-xs mt-1">{errors.mensagem}</p>}
             </div>
 
             <div className="flex flex-wrap items-center gap-4">
               <button type="submit" className="px-5 py-3 rounded-xl font-semibold disabled:opacity-60"
-                      style={{ backgroundColor: "var(--primary)", color: "white" }} disabled={sent}>
-                {sent ? "Enviado ✓" : "Enviar mensagem"}
+                style={{ backgroundColor: "var(--primary)", color: "white" }} disabled={sent}>
+              {sent ? "Enviado ✓" : "Enviar mensagem"}
               </button>
               <a href={`mailto:contacto@exemplo.gov.ao?subject=Contacto%20Programa%20de%20Ades%C3%A3o&body=Nome:%20${encodeURIComponent(form.nome)}%0AEmail:%20${encodeURIComponent(form.email)}%0AOrg:%20${encodeURIComponent(form.org)}%0AMensagem:%20${encodeURIComponent(form.mensagem)}`}
                  className="text-sm underline underline-offset-4 hover:no-underline">
